@@ -1,6 +1,6 @@
 # B.R.A.Y.N.S.
 
-[Bootstrap](http://twitter.github.io/bootstrap/), [Restify](http://mcavage.github.io/node-restify/) [AngularJS](http://angularjs.org/), [Yeoman](http://yeoman.io/), [Node](http://nodejs.org/) and [Stylus](http://learnboost.github.io/stylus/).
+[Bootstrap](http://twitter.github.io/bootstrap/), [Restify](http://mcavage.github.io/node-restify/), [AngularJS](http://angularjs.org/), [Yeoman](http://yeoman.io/), [Node](http://nodejs.org/), and [Stylus](http://learnboost.github.io/stylus/).
 
 This is my basic configuration that I use for new projects.
 It's built for Node, and was built with Yeoman.
