@@ -1,26 +1,33 @@
 'use strict';
-var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
+var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet
 var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir));
-};
+    return connect.static(require('path').resolve(dir))
+}
 
 module.exports = function (grunt) {
     // load all grunt tasks
-    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
 
     // configurable paths
     var yeomanConfig = {
         app: 'app',
         dist: 'dist'
-    };
+    }
 
     try {
-        yeomanConfig.app = require('./component.json').appPath || yeomanConfig.app;
-    } catch (e) {}
+        yeomanConfig.app = require('./component.json').appPath || yeomanConfig.app
+    }
+    catch (e) {}
 
     grunt.initConfig({
         yeoman: yeomanConfig,
         watch: {
+            stylus: {
+                files: [
+                    'app/styles/**/*.styl'
+                ],
+                tasks: 'stylus reload'
+            },
             coffee: {
                 files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
                 tasks: ['coffee:dist']
@@ -46,8 +53,7 @@ module.exports = function (grunt) {
         connect: {
             options: {
                 port: 9000,
-                // Change this to '0.0.0.0' to access the server from outside.
-                hostname: 'localhost'
+                hostname: '0.0.0.0'
             },
             livereload: {
                 options: {
@@ -56,7 +62,7 @@ module.exports = function (grunt) {
                             lrSnippet,
                             mountFolder(connect, '.tmp'),
                             mountFolder(connect, yeomanConfig.app)
-                        ];
+                        ]
                     }
                 }
             },
@@ -66,14 +72,14 @@ module.exports = function (grunt) {
                         return [
                             mountFolder(connect, '.tmp'),
                             mountFolder(connect, 'test')
-                        ];
+                        ]
                     }
                 }
             }
         },
         open: {
             server: {
-                url: 'http://localhost:<%= connect.options.port %>'
+                url: 'http://127.0.0.1:<%= connect.options.port %>'
             }
         },
         clean: {
@@ -187,7 +193,7 @@ module.exports = function (grunt) {
         htmlmin: {
             dist: {
                 options: {
-                    /*removeCommentsFromCDATA: true,
+                    removeCommentsFromCDATA: true,
                     // https://github.com/yeoman/grunt-usemin/issues/44
                     //collapseWhitespace: true,
                     collapseBooleanAttributes: true,
@@ -195,7 +201,7 @@ module.exports = function (grunt) {
                     removeRedundantAttributes: true,
                     useShortDoctype: true,
                     removeEmptyAttributes: true,
-                    removeOptionalTags: true*/
+                    removeOptionalTags: true
                 },
                 files: [{
                     expand: true,
@@ -257,11 +263,22 @@ module.exports = function (grunt) {
                     ]
                 }]
             }
-        }
-    });
+        },
+        stylus: {
+            compile: {
+                options: {
+                    compress: true,
+                    paths: ['node_modules/grunt-contrib-stylus/node_modules']
+                },
+                files: {
+                    'app/styles/*.css': ['app/styles/*.styl']
+                }
+            }
+        },
+    })
 
-    grunt.renameTask('regarde', 'watch');
-
+    grunt.renameTask('regarde', 'watch')
+    grunt.registerTask('compass', ['stylus'])
     grunt.registerTask('server', [
         'clean:server',
         'coffee:dist',
@@ -270,7 +287,7 @@ module.exports = function (grunt) {
         'connect:livereload',
         'open',
         'watch'
-    ]);
+    ])
 
     grunt.registerTask('test', [
         'clean:server',
@@ -278,7 +295,7 @@ module.exports = function (grunt) {
         'compass',
         'connect:test',
         'karma'
-    ]);
+    ])
 
     grunt.registerTask('build', [
         'clean:dist',
@@ -287,17 +304,17 @@ module.exports = function (grunt) {
         'coffee',
         'compass:dist',
         'useminPrepare',
+        'concat',
         'imagemin',
         'cssmin',
         'htmlmin',
-        'concat',
         'copy',
         'cdnify',
         'ngmin',
         'uglify',
         'rev',
         'usemin'
-    ]);
+    ])
 
-    grunt.registerTask('default', ['build']);
-};
+    grunt.registerTask('default', ['build'])
+}
