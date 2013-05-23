@@ -1,7 +1,7 @@
 {
   "name": "brayns",
   "description": "Bootstrap, Restify, AngularJS, Yeoman, Node, and Stylus",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "contributors": [
     "James Costian <james@jamescostian.com> (http://jamescostian.com/)"
   ],
