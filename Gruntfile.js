@@ -1,30 +1,27 @@
 'use strict';
-var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet
-var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir))
-}
+var fs = require('fs'),
+    lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet,
+    mountFolder = function (connect, dir) {
+        return connect.static(require('path').resolve(dir))
+    },
+    gruntConfig
 
 module.exports = function (grunt) {
+    var yeomanConfig = {
+            app: 'static/app',
+            dist: 'static/dist'
+        },
+        styles = fs.readdirSync(yeomanConfig.app + '/styles/')
+
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
 
-    // configurable paths
-    var yeomanConfig = {
-        app: 'app',
-        dist: 'dist'
-    }
-
-    try {
-        yeomanConfig.app = require('./component.json').appPath || yeomanConfig.app
-    }
-    catch (e) {}
-
-    grunt.initConfig({
+    gruntConfig = {
         yeoman: yeomanConfig,
         watch: {
             stylus: {
                 files: [
-                    'app/styles/**/*.styl'
+                    '<%= yeoman.app %>/styles/**/*.styl'
                 ],
                 tasks: 'stylus reload'
             },
@@ -101,7 +98,8 @@ module.exports = function (grunt) {
             },
             all: [
                 'Gruntfile.js',
-                '<%= yeoman.app %>/scripts/{,*/}*.js'
+                '<%= yeoman.app %>/scripts/{,*/}*.js',
+                '!<%= yeoman.app %>/scripts/{,*/}*.min.js'
             ]
         },
         karma: {
@@ -152,7 +150,7 @@ module.exports = function (grunt) {
                 files: {
                     '<%= yeoman.dist %>/scripts/scripts.js': [
                         '.tmp/scripts/{,*/}*.js',
-                        '<%= yeoman.app %>/scripts/{,*/}*.js'
+                        '<%= yeoman.app %>/scripts/{,*/}*.{js,min.js}'
                     ]
                 }
             }
@@ -270,12 +268,16 @@ module.exports = function (grunt) {
                     compress: true,
                     paths: ['node_modules/grunt-contrib-stylus/node_modules']
                 },
-                files: {
-                    'app/styles/*.css': ['app/styles/*.styl']
-                }
+                files: {}
             }
-        },
-    })
+        }
+    }
+
+    /*styles.forEach(function (name, id, array) {
+        gruntConfig.stylus.compile.options.files[yeomanConfig.dist + '/styles/' + name + '.css'] = yeomanConfig.app + '/styles/' + name + '/main.styl'
+    })*/
+
+    grunt.initConfig(gruntConfig)
 
     grunt.renameTask('regarde', 'watch')
     grunt.registerTask('compass', ['stylus'])
