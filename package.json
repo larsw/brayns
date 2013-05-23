@@ -44,7 +44,8 @@
     "matchdep": ">=0.1.1",
     "grunt-google-cdn": ">=0.1.1",
     "grunt-ngmin": ">=0.0.2",
-    "grunt-contrib-stylus": "~0.5.0"
+    "grunt-contrib-stylus": "~0.5.0",
+    "grunt-bump": "git://github.com/jamescostian/grunt-bump.git"
   },
   "engines": {
     "node": ">=0.10.0"
