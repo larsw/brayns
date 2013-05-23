@@ -1,5 +1,5 @@
 {
-    "name": "brayns",
+    "name": "generator-brayns",
     "description": "A generator for Yeoman for Bootstrap, Restify, AngularJS, Yeoman, Node, and Stylus.",
     "version": "0.1.2",
     "contributors": [
