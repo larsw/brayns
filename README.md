@@ -1,6 +1,4 @@
 # Brayns
-[![Build Status](https://secure.travis-ci.org/jamescostian/brayns.png?branch=master)](https://travis-ci.org/jamescostian/brayns)
-
 A generator for Yeoman for [Bootstrap](http://twitter.github.io/bootstrap/), [Restify](http://mcavage.github.io/node-restify/), [AngularJS](http://angularjs.org/), [Yeoman](http://yeoman.io/), [Node](http://nodejs.org/), and [Stylus](http://learnboost.github.io/stylus/).
 
 It's built to run on Node and be used through Yeoman.

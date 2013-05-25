@@ -19,15 +19,9 @@
     "homepage": "https://github.com/jamescostian/brayns",
     "bugs": "https://github.com/jamescostian/brayns/issues",
     "main": "app/index.js",
-    "scripts": {
-        "test": "mocha"
-    },
     "dependencies": {
         "hogan.js": ">=2.0.0",
         "yeoman-generator": ">=0.10.2"
-    },
-    "devDependencies": {
-        "mocha": ">=1.9.0"
     },
     "engines": {
         "node": ">=0.8.0"
