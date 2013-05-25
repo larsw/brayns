@@ -23,6 +23,7 @@
         "test": "mocha"
     },
     "dependencies": {
+        "hogan.js": ">=2.0.0",
         "yeoman-generator": ">=0.10.2"
     },
     "devDependencies": {

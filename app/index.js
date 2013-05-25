@@ -1,7 +1,9 @@
 'use strict';
 var util = require('util'),
     path = require('path'),
+    fs = require('fs'),
     yeoman = require('yeoman-generator'),
+    parts = require('./parts.js'),
     BraynsGenerator
 
 BraynsGenerator = module.exports = function BraynsGenerator(args, options, config) {
@@ -16,54 +18,90 @@ BraynsGenerator = module.exports = function BraynsGenerator(args, options, confi
 
 util.inherits(BraynsGenerator, yeoman.generators.NamedBase)
 
-BraynsGenerator.prototype.askFor = function askFor() {
+BraynsGenerator.prototype.askForStuff = function askForPackageJSON() {
     var cb = this.async(),
-        welcome =
-        '\n         _-----_' +
-        '\n        |             |' +
-        '\n        |' + '--(o)--'.red + '|     .--------------------------.' +
-        '\n     `---------´    |        ' + 'Welcome to Yeoman,'.yellow.bold + '        |' +
-        '\n        ' + '( '.yellow + '_' + '´U`'.yellow + '_' + ' )'.yellow + '     |     ' + 'ladies and gentlemen!'.yellow.bold + '    |' +
-        '\n        /___A___\\     \'__________________________\'' +
-        '\n         |    ~    |'.yellow +
-        '\n     __' + '\'.___.\''.yellow + '__' +
-        '\n ´     ' + '`    |'.red + '° ' + '´ Y'.red + ' `\n',
-        prompt
-
-    console.log(welcome)
-
-    prompts = [{
-        name: 'someOption',
-        message: 'Would you like to enable this option?',
-        default: 'Y/n',
-        warning: 'Yes: Enabling this will be totally awesome!'
-    }]
+        dirname = this.destinationRoot().split(path.sep),
+        prompts = [
+            {
+                name: 'bootstrap',
+                message: 'Would you like to use Bootstrap + jQuery? If not, you\'ll still get a basic skeleton',
+                default: 'Y/n'
+            },
+            {
+                name: 'travis',
+                message: 'Are you going to use Travis CI?',
+                default: 'Y/n'
+            },
+            {
+                name: 'packageName',
+                message: 'What is this package\'s name?',
+                default: dirname[dirname.length - 1]
+            },
+            {
+                name: 'packageDesc',
+                message: 'What is this package\'s description?',
+                default: 'Awesome.'
+            },
+            {
+                name: 'github',
+                message: 'What is your GitHub username?',
+            },
+            {
+                name: 'authorName',
+                message: 'What is your name?'
+            },
+            {
+                name: 'authorEmail',
+                message: 'What is your email address?'
+            },
+            {
+                name: 'authorWebsite',
+                message: 'What is your website?'
+            }
+        ]
 
     this.prompt(prompts, function (err, props) {
         if (err) {
             return this.emit('error', err)
         }
 
-        this.someOption = (/y/i).test(props.someOption)
+        this.opts = {
+            bootstrap: (/y/i).test(props.bootstrap),
+            author: {
+                ghUserName: props.github
+            },
+            travis: (/y/i).test(props.travis),
+            year: new Date().getFullYear()
+        }
+
+        this.opts['package'] = {
+            name: props.packageName,
+            desc: props.packageDesc
+        }
+
+        this.opts.contributor = props.authorName
+        if (props.authorEmail !== '' && typeof props.authorEmail === 'string') {
+            this.opts.contributor += ' <' + props.authorEmail + '>'
+        }
+        if (props.authorWebsite !== '' && typeof props.authorWebsite === 'string') {
+            this.opts.contributor += '  (' + props.authorWebsite + ')'
+        }
 
         cb()
     }.bind(this))
 }
 
 BraynsGenerator.prototype.app = function app() {
-    this.mkdir('static')
-    this.mkdir('static/source')
-    this.mkdir('static/build')
-    this.mkdir('static/tmp')
+    parts.setupBaseDirs(this)
+    parts.setupBaseJS(this)
 
-    this.copy('_package.json', 'package.json')
-    this.copy('_Gruntfile.js', 'Gruntfile.js')
-}
+    if (this.opts.bootstrap === true) {
+        parts.setupBootstrap(this)
+    }
+    else {
+        parts.setupSkeleton(this)
+    }
 
-BraynsGenerator.prototype.projectfiles = function projectfiles() {
-    this.copy('editorconfig', '.editorconfig')
-    this.copy('gitattributes', '.gitattributes')
-    this.copy('gitignore', '.gitignore')
-    this.copy('jshintrc', '.jshintrc')
-    this.copy('travis.yml', '.travis.yml')
+    parts.doCustomizations(this)
+    parts.setupDotFiles(this)
 }

@@ -1,14 +1,14 @@
 {
-    "name": "{{PACKAGENAME}}",
-    "description": "{{PACKAGEDESC}}",
+    "name": "{{package.name}}",
+    "description": "{{package.desc}}",
     "version": "0.1.0",
     "contributors": [
-        "{{AUTHORNAME}} <{{AUTHOREMAIL}}> ({{AUTHORWEBSITE}})"
+        "{{{contributor}}}"
     ],
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git://github.com/{{GITUSERNAME}}/{{PACKAGENAME}}.git"
+        "url": "git://github.com/{{author.ghUserName}}/{{package.name}}.git"
     },
     "main": "lib/module.js",
     "bin": {},
