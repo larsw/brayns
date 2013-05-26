@@ -1,0 +1,36 @@
+!!!
+html(lang="en")
+    head
+        block title
+            title {{package.name}}
+
+        block meta
+            block metaCharset
+                meta(charset='utf-8')
+            block metaAuthor
+                meta(name='author', content='{{author.name}}')
+            block metaDesciption
+                meta(name='description', content='{{package.desc}}')
+            meta(name='viewport', content='width=device-width')
+
+        //- In the blocks called allCSSTop and allJSTop you should put global requirements that almost all pages will need to have at the top. In the blocks called cssTop and jsTop you should put files that should be included at top of most pages. Those blocks can then be overriden by other jade files that extend this basic layout.
+
+        block allCSSTop
+            block cssTop
+                link(rel='stylesheet', href='css/main.css')
+
+        block allJSTop
+            block jsTop
+                script(src='js/main.js', defer)
+
+    body
+        div.container
+            block container
+
+        //- In the blocks called allCSSBottom and allJSBottom you should put global requirements that almost all pages will need to have at the bottom. In the blocks called cssBottom and jsBottom you should put files that should be included at bottom of most pages. Those blocks can then be overriden by other jade files that extend this basic layout.
+
+        block allCSSBottom
+            block cssBottom
+
+        block allJSBottom
+            block jsBottom

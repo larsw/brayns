@@ -93,7 +93,7 @@ BraynsGenerator.prototype.askForStuff = function askForPackageJSON() {
 
 BraynsGenerator.prototype.app = function app() {
     parts.setupBaseDirs(this)
-    parts.setupBaseJS(this)
+    parts.setupBaseStaticFiles(this)
 
     if (this.opts.bootstrap === true) {
         parts.setupBootstrap(this)

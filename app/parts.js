@@ -19,7 +19,10 @@ module.exports.setupBaseDirs = function (that) {
     that.mkdir('static/tmp')
 }
 
-module.exports.setupBaseJS = function (that) {
+module.exports.setupBaseStaticFiles = function (that) {
+    that.copy('static/404.jade', 'static/source/jade/404.jade')
+    that.copy('static/favicon.ico', 'static/source/img/favicon.ico')
+    that.copy('static/robots.txt', 'static/source/robots.txt')
     that.copy('static/script.js', 'static/source/js/main/script.js')
 }
 
@@ -39,17 +42,18 @@ module.exports.setupDotFiles = function (that) {
 }
 
 module.exports.setupBootstrap = function (that) {
-    hoganCopy(that, 'package.json', 'package.json')
+    hoganCopy(that, 'static-b/layout.jade', 'static/source/jade/layout.jade')
+    hoganCopy(that, 'static-b/index.jade', 'static/source/jade/index.jade')
     that.mkdir('static/source/bootstrap')
     that.copy('static-b/init.styl', 'static/source/stylus/main/init.styl')
     that.copy('static-b/css/bootstrap.min.css', 'static/source/bootstrap/css/bootstrap.min.css')
-    that.copy('static-b/js/jquery.min.js', 'static/source/jquery.min.js')
     that.copy('static-b/js/bootstrap.min.js', 'static/source/bootstrap/js/bootstrap.min.js')
     that.copy('static-b/img/glyphicons-halflings.png', 'static/source/bootstrap/img/glyphicons-halflings.png')
     that.copy('static-b/img/glyphicons-halflings.png', 'static/source/bootstrap/img/glyphicons-halflings-white.png')
 }
 
 module.exports.setupSkeleton = function (that) {
+    hoganCopy(that, 'static-s/layout.jade', 'static/source/jade/layout.jade')
     hoganCopy(that, 'static-s/index.jade', 'static/source/jade/index.jade')
     require('./skeleton.js')(that)
 }
