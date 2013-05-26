@@ -84,7 +84,7 @@ BraynsGenerator.prototype.askForStuff = function askForPackageJSON() {
             this.opts.contributor += ' <' + props.authorEmail + '>'
         }
         if (props.authorWebsite !== '' && typeof props.authorWebsite === 'string') {
-            this.opts.contributor += '  (' + props.authorWebsite + ')'
+            this.opts.contributor += ' (' + props.authorWebsite + ')'
         }
 
         cb()

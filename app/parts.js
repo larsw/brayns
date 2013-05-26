@@ -7,21 +7,12 @@ var Hogan = require('hogan.js'),
     }
 
 module.exports.setupBaseDirs = function (that) {
-    that.mkdir('static')
-    that.mkdir('static/source')
-    that.mkdir('static/source/jade')
-    that.mkdir('static/source/img')
-    that.mkdir('static/source/js')
-    that.mkdir('static/source/js/main')
-    that.mkdir('static/source/stylus')
-    that.mkdir('static/source/stylus/main')
-    that.mkdir('static/build')
-    that.mkdir('static/tmp')
+    require('./setup-base-dirs.js')(that.mkdir)
 }
 
 module.exports.setupBaseStaticFiles = function (that) {
     that.copy('static/404.jade', 'static/source/jade/404.jade')
-    that.copy('static/favicon.ico', 'static/source/img/favicon.ico')
+    that.copy('static/favicon.ico', 'static/build/img/favicon.ico')
     that.copy('static/robots.txt', 'static/source/robots.txt')
     that.copy('static/script.js', 'static/source/js/main/script.js')
 }
@@ -38,7 +29,9 @@ module.exports.setupDotFiles = function (that) {
     that.copy('gitattributes', '.gitattributes')
     that.copy('gitignore', '.gitignore')
     that.copy('jshintrc', '.jshintrc')
-    that.copy('travis.yml', '.travis.yml')
+    if (that.opts.travis === true) {
+        that.copy('travis.yml', '.travis.yml')
+    }
 }
 
 module.exports.setupBootstrap = function (that) {
@@ -46,10 +39,10 @@ module.exports.setupBootstrap = function (that) {
     hoganCopy(that, 'static-b/index.jade', 'static/source/jade/index.jade')
     that.mkdir('static/source/bootstrap')
     that.copy('static-b/init.styl', 'static/source/stylus/main/init.styl')
-    that.copy('static-b/css/bootstrap.min.css', 'static/source/bootstrap/css/bootstrap.min.css')
-    that.copy('static-b/js/bootstrap.min.js', 'static/source/bootstrap/js/bootstrap.min.js')
-    that.copy('static-b/img/glyphicons-halflings.png', 'static/source/bootstrap/img/glyphicons-halflings.png')
-    that.copy('static-b/img/glyphicons-halflings.png', 'static/source/bootstrap/img/glyphicons-halflings-white.png')
+    that.copy('static-b/css/bootstrap.min.css', 'static/source/bootstrap/bootstrap.min.css')
+    that.copy('static-b/js/bootstrap.min.js', 'static/source/bootstrap/bootstrap.min.js')
+    that.copy('static-b/img/glyphicons-halflings.png', 'static/build/img/glyphicons-halflings.png')
+    that.copy('static-b/img/glyphicons-halflings.png', 'static/build/img/glyphicons-halflings-white.png')
 }
 
 module.exports.setupSkeleton = function (that) {

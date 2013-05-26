@@ -1,0 +1,16 @@
+module.exports = function (mkdir) {
+    mkdir('static')
+    mkdir('static/source')
+    mkdir('static/source/jade')
+    mkdir('static/source/js')
+    mkdir('static/source/js/main')
+    mkdir('static/source/stylus')
+    mkdir('static/source/stylus/main')
+    mkdir('static/build')
+    mkdir('static/build/img')
+    mkdir('static/build/css')
+    mkdir('static/build/js')
+    mkdir('static/tmp')
+    mkdir('static/tmp/js')
+    mkdir('static/tmp/css')
+}

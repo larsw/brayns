@@ -1,9 +1,5 @@
 'use strict';
 var fs = require('fs'),
-    lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet,
-    mountFolder = function (connect, dir) {
-        return connect.static(require('path').resolve(dir))
-    },
     gruntConfig
 
 module.exports = function (grunt) {
@@ -12,7 +8,7 @@ module.exports = function (grunt) {
             build: 'static/build',
             tmp: 'static/tmp'
         },
-        styles = fs.readdirSync(yeomanConfig.source + '/styles/')
+        styles = fs.readdirSync(yeomanConfig.source + '/stylus/')
 
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
@@ -22,7 +18,7 @@ module.exports = function (grunt) {
         watch: {
             stylus: {
                 files: [
-                    '<%= yeoman.source %>/styles/**/*.styl'
+                    '<%= yeoman.source %>/stylus/**/*.styl'
                 ],
                 tasks: 'stylus reload'
             }
@@ -55,28 +51,23 @@ module.exports = function (grunt) {
             },
             all: [
                 'Gruntfile.js',
-                '<%= yeoman.source %>/scripts/{,*/}*.js',
-                '!<%= yeoman.source %>/scripts/{,*/}*.min.js'
+                '<%= yeoman.source %>/js/{,*/}*.js',
+                '!<%= yeoman.source %>/js/{,*/}*.min.js'
             ]
         },
         concat: {
             build: {
                 files: {
-                    '<%= yeoman.build %>/scripts/scripts.js': [
-                        '.tmp/scripts/{,*/}*.js',
-                        '<%= yeoman.source %>/scripts/{,*/}*.{js,min.js}'
+                    '<%= yeoman.build %>/js/scripts.js': [
+                        '.tmp/js/{,*/}*.js',
+                        '<%= yeoman.source %>/js/{,*/}*.{js,min.js}'
                     ]
                 }
             }
         },
         cssmin: {
             build: {
-                files: {
-                    '<%= yeoman.build %>/styles/main.css': [
-                        '.tmp/styles/{,*/}*.css',
-                        '<%= yeoman.source %>/styles/{,*/}*.css'
-                    ]
-                }
+                files: {}
             }
         },
         uglify: {
