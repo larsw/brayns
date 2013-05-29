@@ -122,7 +122,6 @@ module.exports = function (grunt) {
         'clean:build',
         'jshint',
         'test',
-        'coffee',
         'compass:build',
         'useminPrepare',
         'concat',
